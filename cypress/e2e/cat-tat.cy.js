@@ -12,6 +12,7 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   })
 
   it('Preenche os campos obrigatórios e envia o formulário', () => {
+    cy.clock()
 
     const longText = Cypress._.repeat('abcdefghijklmnopqrstuvwxyz ', 10)
 
@@ -55,10 +56,16 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // Verificar Mensagem
     cy.get('span[class=success]')
       .should('be.visible')
+    
+    cy.tick(3000)
+
+    cy.get('span[class=success]')
+      .should('not.be.visible')
 
   });
 
   it('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+    cy.clock()
 
     // Campo Nome
     cy.get('input[id=firstName]')
@@ -96,6 +103,11 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // Verificar Mensagem
     cy.get('span[class=error]')
       .should('be.visible')
+
+    cy.tick(3000)
+    cy.get('span[class=error]')
+      .should('not.be.visible')
+
   });
 
   it('Campo telefone continua vazio quando preenchido com valor não numérico', () => {
@@ -109,6 +121,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+    cy.clock()
+
     // Campo Nome
     cy.get('input[id=firstName]')
       .as('nome')
@@ -151,6 +165,10 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // Verificar Mensagem
     cy.get('span[class=error]')
       .should('be.visible')
+
+    cy.tick(3000)
+    cy.get('span[class=error]')
+      .should('not.be.visible')
   });
 
   it('Preenche e limpa os campos nome, sobrenome, email e telefone', () => {
@@ -193,6 +211,8 @@ describe('Central de Atendimento ao Cliente TAT', () => {
   });
 
   it('Exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios', () => {
+    cy.clock()
+
     // Botão de Enviar
     cy.contains('button', 'Enviar')
       .should('be.visible')
@@ -201,9 +221,14 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // Verificar Mensagem
     cy.get('span[class=error]')
       .should('be.visible')
+
+    cy.tick(3000)
+    cy.get('span[class=error]')
+      .should('not.be.visible')
   });
 
   it('Envia o formuário com sucesso usando um comando customizado', () => {
+    cy.clock()
 
     const data = {
       firstName: 'Nome',
@@ -217,6 +242,10 @@ describe('Central de Atendimento ao Cliente TAT', () => {
     // Verificar Mensagem
     cy.get('span[class=success]')
       .should('be.visible')
+
+    cy.tick(3000)
+    cy.get('span[class=success]')
+      .should('not.be.visible')
   });
 
   it('Seleciona um produto (YouTube) por seu texto', () => {
